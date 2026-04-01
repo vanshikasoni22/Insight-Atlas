@@ -39,3 +39,44 @@ h1 {
   background-color: #f1f5f9;
   transition: 0.2s;
 }
+/* Responsive Design */
+@media (max-width: 768px) {
+
+  body {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+
+  #data {
+    max-width: 100%;
+  }
+
+  #data div {
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  #data p {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+}
+
+/* Extra small devices (phones) */
+@media (max-width: 480px) {
+
+  h1 {
+    font-size: 18px;
+  }
+
+  #data div {
+    padding: 8px;
+  }
+
+  #data p {
+    font-size: 12px;
+  }
+}
