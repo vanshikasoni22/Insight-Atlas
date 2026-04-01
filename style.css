@@ -1,0 +1,40 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f6f8;
+  margin: 0;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+/* Container for data */
+#data {
+  max-width: 800px;
+  margin: auto;
+}
+
+/* Each row */
+#data div {
+  background: white;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border-left: 5px solid #3b82f6;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* Text inside rows */
+#data p {
+  margin: 0;
+  color: #444;
+  font-size: 14px;
+}
+
+/* Hover effect */
+#data div:hover {
+  background-color: #f1f5f9;
+  transition: 0.2s;
+}
