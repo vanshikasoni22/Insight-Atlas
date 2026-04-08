@@ -78,6 +78,9 @@ async function fetchData() {
     data = data.filter(item =>
       item["Total ($)"] > 100
     );
+    data = data.filter(item =>
+      item["Quantity"] > 2
+    );
     data = data.sort((a, b) => b["Total ($)"] - a["Total ($)"]);
 
     displayData(data);
