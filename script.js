@@ -74,6 +74,10 @@ async function fetchData() {
     data = data.filter(item =>
       item["User ID"].toLowerCase().includes("john")
     );
+
+    data = data.filter(item =>
+      item["Total ($)"] > 100
+    );
     data = data.sort((a, b) => b["Total ($)"] - a["Total ($)"]);
 
     displayData(data);
