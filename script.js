@@ -71,9 +71,9 @@ async function fetchData() {
     let data = await res.json();
 
 
-    data = data.filter(item => item["Quantity"] > 2);
-
-
+    data = data.filter(item =>
+      item["User ID"].toLowerCase().includes("john")
+    );
     data = data.sort((a, b) => b["Total ($)"] - a["Total ($)"]);
 
     displayData(data);
