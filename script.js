@@ -70,10 +70,10 @@ async function fetchData() {
     const res = await fetch(API_URL);
     let data = await res.json();
 
-    // 🔽 FILTER → only show Quantity > 2
+
     data = data.filter(item => item["Quantity"] > 2);
 
-    // 🔽 SORT → Total ($) High → Low
+
     data = data.sort((a, b) => b["Total ($)"] - a["Total ($)"]);
 
     displayData(data);
