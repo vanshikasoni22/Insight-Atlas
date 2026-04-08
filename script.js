@@ -68,7 +68,13 @@ const API_URL = "http://localhost:3000/public/question/62f29651-4ca0-4cdb-a779-0
 async function fetchData() {
   try {
     const res = await fetch(API_URL);
-    const data = await res.json();
+    let data = await res.json();
+
+    // 🔽 FILTER → only show Quantity > 2
+    data = data.filter(item => item["Quantity"] > 2);
+
+    // 🔽 SORT → Total ($) High → Low
+    data = data.sort((a, b) => b["Total ($)"] - a["Total ($)"]);
 
     displayData(data);
 
@@ -79,6 +85,7 @@ async function fetchData() {
 
 function displayData(data) {
   const container = document.getElementById("data");
+  container.innerHTML = ""; // clear old data
 
   data.slice(0, 50).forEach(item => {
     const div = document.createElement("div");
