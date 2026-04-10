@@ -10,3 +10,27 @@ const state = {
   reviews:  { raw: [], filtered: [], cols: [], page: 1, sortCol: null, sortDir: 'asc', loaded: false },
   products: { raw: [], filtered: [], cols: [], page: 1, sortCol: null, sortDir: 'asc', loaded: false },
 };
+const PAGE_SIZE = 25;
+const charts = {};
+function toggleTheme() {
+  const html = document.documentElement;
+
+  // Check current theme
+  if (html.getAttribute("data-theme") === "dark") {
+    html.setAttribute("data-theme", "light");
+
+    document.getElementById("theme-label").textContent = "Dark Mode";
+    document.getElementById("theme-icon-moon").style.display = "none";
+    document.getElementById("theme-icon-sun").style.display = "block";
+
+  } else {
+    html.setAttribute("data-theme", "dark");
+
+    document.getElementById("theme-label").textContent = "Light Mode";
+    document.getElementById("theme-icon-moon").style.display = "block";
+    document.getElementById("theme-icon-sun").style.display = "none";
+  }
+
+  // Refresh charts
+  rebuildAllCharts();
+}
