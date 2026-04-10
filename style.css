@@ -541,3 +541,26 @@ body {
 }
 
 @keyframes spin { to { transform: rotate(360deg); } }
+.toast {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px 20px;
+  font-size: 13px;
+  color: var(--text-primary);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(20px);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.28s cubic-bezier(0.4,0,0.2,1);
+  z-index: 999;
+  max-width: 340px;
+}
+
+.toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
