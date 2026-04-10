@@ -41,7 +41,7 @@ function toggleTheme() {
     document.getElementById("theme-icon-sun").style.display = "none";
   }
 
-  // Refresh charts
+
   rebuildAllCharts();
 }
 function toggleSidebar() {
@@ -73,3 +73,11 @@ function showSection(name, navEl) {
   }
 
 }
+  let _toastTimer;
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(_toastTimer);
+    _toastTimer = setTimeout(() => t.classList.remove('show'), 3200);
+  }
