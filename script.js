@@ -304,3 +304,24 @@ function renderTable(name) {
       tbody.appendChild(tr);
     });
   }
+
+renderPagination(name, Math.ceil(s.filtered.length / PAGE_SIZE));
+}
+
+function formatCell(value, colName) {
+  if (value === null || value === undefined) return '—';
+  const col = (colName || '').toLowerCase();
+  // Format dates
+  if ((col.includes('date') || col.includes('at') || col.includes('time')) && typeof value === 'string' && value.length > 10) {
+    const d = new Date(value);
+    if (!isNaN(d)) return d.toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
+  }
+  // Format numbers
+  if (typeof value === 'number') {
+    if (col.includes('price') || col.includes('amount') || col.includes('total') || col.includes('revenue')) {
+      return '$' + value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+    return value.toLocaleString();
+  }
+  return String(value);
+}
