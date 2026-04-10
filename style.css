@@ -564,3 +564,9 @@ body {
   transform: translateY(0);
   opacity: 1;
 }
+.empty-state {
+  padding: 48px 20px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 13.5px;
+}
