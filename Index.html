@@ -82,3 +82,56 @@
         <h1>Dashboard Overview</h1>
         <p class="section-subtitle">Key metrics across all data sources</p>
       </div>
+
+      <div class="kpi-grid" id="kpiGrid">
+        <div class="kpi-card" onclick="showSection('orders', document.getElementById('nav-orders'))">
+          <div class="kpi-icon orders-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          </div>
+          <div class="kpi-info">
+            <div class="kpi-value" id="kpi-orders">—</div>
+            <div class="kpi-label">Total Orders</div>
+          </div>
+          <div class="kpi-trend up" id="kpi-orders-trend">↑</div>
+        </div>
+        <div class="kpi-card" onclick="showSection('events', document.getElementById('nav-events'))">
+          <div class="kpi-icon events-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <div class="kpi-info">
+            <div class="kpi-value" id="kpi-events">—</div>
+            <div class="kpi-label">Total Events</div>
+          </div>
+          <div class="kpi-trend up" id="kpi-events-trend">↑</div>
+        </div>
+        <div class="kpi-card" onclick="showSection('invoices', document.getElementById('nav-invoices'))">
+          <div class="kpi-icon invoices-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+          </div>
+          <div class="kpi-info">
+            <div class="kpi-value" id="kpi-invoices">—</div>
+            <div class="kpi-label">Total Invoices</div>
+          </div>
+          <div class="kpi-trend up" id="kpi-invoices-trend">↑</div>
+        </div>
+        <div class="kpi-card" onclick="showSection('reviews', document.getElementById('nav-reviews'))">
+          <div class="kpi-icon reviews-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
+          </div>
+          <div class="kpi-info">
+            <div class="kpi-value" id="kpi-reviews">—</div>
+            <div class="kpi-label">Total Reviews</div>
+          </div>
+          <div class="kpi-trend" id="kpi-reviews-trend">★</div>
+        </div>
+        <div class="kpi-card" onclick="showSection('products', document.getElementById('nav-products'))">
+          <div class="kpi-icon products-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+          </div>
+          <div class="kpi-info">
+            <div class="kpi-value" id="kpi-products">—</div>
+            <div class="kpi-label">Total Products</div>
+          </div>
+          <div class="kpi-trend up" id="kpi-products-trend">↑</div>
+        </div>
+      </div>
