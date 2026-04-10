@@ -601,3 +601,40 @@ function drawReviewsChart(cols, rows, cfg, canvasId) {
     });
   }
 }
+function drawProductsChart(cols, rows, cfg, canvasId) {
+  destroyChart(canvasId);
+
+  // Try to get category or vendor column
+  const catIdx = cols.findIndex(c => c.toLowerCase().includes('categ') || c.toLowerCase().includes('vendor') || c.toLowerCase().includes('type'));
+
+  let counts = {};
+  if (catIdx !== -1) {
+    rows.forEach(row => {
+      const v = String(row[catIdx] ?? 'Unknown');
+      counts[v] = (counts[v] || 0) + 1;
+    });
+  } else {
+    counts = { 'Products': rows.length };
+  }
+
+  const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 10);
+  const labels = sorted.map(([k]) => k);
+  const data   = sorted.map(([, v]) => v);
+
+  const ctx = document.getElementById(canvasId).getContext('2d');
+  charts[canvasId] = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Count',
+        data,
+        backgroundColor: [cfg.accent, cfg.accent2, cfg.accent3, cfg.success, cfg.warning, '#a78bfa', '#fb923c', '#4ade80', '#f87171', '#60a5fa'],
+        borderRadius: 6,
+      }]
+    },
+    options: {
+      ...barChartOptions(cfg),
+      indexAxis: 'y',
+    }
+  });
