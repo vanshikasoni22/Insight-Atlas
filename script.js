@@ -407,3 +407,60 @@ function drawSectionChart(name, cols, rows) {
   if (name === 'reviews')  drawReviewsChart(cols, rows, cfg, 'reviewsChart');
   if (name === 'products') drawProductsChart(cols, rows, cfg, 'productsChart');
 }
+function drawOrdersChart(cols, rows, cfg) {
+  destroyChart('ordersChart');
+
+  const dateIdx = cols.findIndex(c => c.toLowerCase().includes('creat') || c.toLowerCase().includes('date'));
+  if (dateIdx === -1) { drawSimpleBarChart('ordersChart', cols, rows, cfg); return; }
+
+  const monthCounts = {};
+  rows.forEach(row => {
+    const d = new Date(row[dateIdx]);
+    if (isNaN(d)) return;
+    const key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+    monthCounts[key] = (monthCounts[key] || 0) + 1;
+  });
+
+  const sorted = Object.entries(monthCounts).sort((a, b) => a[0].localeCompare(b[0]));
+  const labels = sorted.map(([k]) => k);
+  const data   = sorted.map(([, v]) => v);
+
+  const ctx = document.getElementById('ordersChart').getContext('2d');
+  charts['ordersChart'] = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Orders',
+        data,
+        borderColor: cfg.accent,
+        backgroundColor: cfg.accent + '22',
+        fill: true,
+        tension: 0.4,
+        pointRadius: 3,
+        pointBackgroundColor: cfg.accent,
+      }]
+    },
+    options: lineChartOptions(cfg),
+  });
+
+  // Also update overview chart with same data
+  destroyChart('overviewOrdersChart');
+  const ctx2 = document.getElementById('overviewOrdersChart').getContext('2d');
+  charts['overviewOrdersChart'] = new Chart(ctx2, {
+    type: 'line',
+    data: {
+      labels: labels.slice(-12),
+      datasets: [{
+        label: 'Orders',
+        data: data.slice(-12),
+        borderColor: cfg.accent,
+        backgroundColor: cfg.accent + '22',
+        fill: true,
+        tension: 0.4,
+        pointRadius: 2,
+        pointBackgroundColor: cfg.accent,
+      }]
+    },
+    options: lineChartOptions(cfg),
+  });
