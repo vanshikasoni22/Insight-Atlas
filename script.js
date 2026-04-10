@@ -736,3 +736,27 @@ function rebuildAllCharts() {
     }
   });
 }
+function capitalize(s) {
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
+// ─── TIME FILTER EVENT LISTENERS ─────────────────────────────────────────────
+['orders', 'events', 'invoices', 'reviews', 'products'].forEach(name => {
+  const el = document.getElementById(name + '-filter-time');
+  if (el) el.addEventListener('change', () => filterTable(name));
+});
+
+// ─── INIT: PRE-FETCH ALL DATA IN BG ──────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+  // Kick off all fetches in parallel so charts + KPIs populate automatically
+  ['orders', 'events', 'invoices', 'reviews', 'products'].forEach(name => {
+    fetchSectionData(name);
+  });
+
+  // Animate KPI cards on overview entrance
+  setTimeout(() => {
+    document.querySelectorAll('.kpi-card').forEach((card, i) => {
+      card.style.animationDelay = (i * 0.07) + 's';
+    });
+  }, 100);
+});
