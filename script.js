@@ -47,3 +47,29 @@ function toggleTheme() {
 function toggleSidebar() {
   document.getElementById('sidebar').classList.toggle('open');
 }
+
+function showSection(name, navEl) {
+
+  document.querySelectorAll(".dashboard-section").forEach(sec => {
+    sec.classList.remove("active");
+  });
+
+  const section = document.getElementById("section-" + name);
+  if (section) section.classList.add("active");
+
+  document.querySelectorAll(".nav-item").forEach(item => {
+    item.classList.remove("active");
+  });
+  if (navEl) navEl.classList.add("active");
+
+  document.getElementById("topbarTitle").textContent = name.toUpperCase();
+
+  if (window.innerWidth <= 700) {
+    document.getElementById("sidebar").classList.remove("open");
+  }
+
+  if (name !== "overview" && !state[name].loaded) {
+    fetchSectionData(name);
+  }
+
+}
