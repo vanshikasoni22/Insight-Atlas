@@ -760,3 +760,15 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }, 100);
 });
+function getChartColors() {
+  const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+  return {
+    accent:  isDark ? '#7c6af7' : '#6c5ce7',
+    accent2: isDark ? '#38bdf8' : '#0ea5e9',
+    accent3: isDark ? '#f472b6' : '#ec4899',
+    success: '#34d399',
+    warning: '#fbbf24',
+    grid:    isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)',
+    text:    isDark ? '#9199c4' : '#4a5080',
+  };
+}
