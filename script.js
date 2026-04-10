@@ -12,6 +12,16 @@ const state = {
 };
 const PAGE_SIZE = 25;
 const charts = {};
+
+function updateClock() {
+  const el = document.getElementById('topbarTime');
+  if (!el) return;
+  const now = new Date();
+  el.textContent = now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+}
+setInterval(updateClock, 1000);
+updateClock();
+
 function toggleTheme() {
   const html = document.documentElement;
 
