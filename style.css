@@ -112,3 +112,17 @@ body {
   flex: 1;
   transition: margin-left 0.3s cubic-bezier(0.4,0,0.2,1);
 }
+.topbar {
+  position: sticky;
+  top: 0;
+  height: var(--topbar-h);
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 28px;
+  z-index: 90;
+  backdrop-filter: blur(12px);
+  transition: background 0.3s;
+}
