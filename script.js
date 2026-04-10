@@ -638,3 +638,22 @@ function drawProductsChart(cols, rows, cfg, canvasId) {
       indexAxis: 'y',
     }
   });
+
+    if (canvasId === 'productsChart') {
+    destroyChart('overviewProductsChart');
+    const ctx4 = document.getElementById('overviewProductsChart').getContext('2d');
+    charts['overviewProductsChart'] = new Chart(ctx4, {
+      type: 'bar',
+      data: {
+        labels: labels.slice(0, 6),
+        datasets: [{
+          label: 'Count',
+          data: data.slice(0, 6),
+          backgroundColor: [cfg.accent, cfg.accent2, cfg.accent3, cfg.success, cfg.warning, '#a78bfa'],
+          borderRadius: 5,
+        }]
+      },
+      options: { ...barChartOptions(cfg), indexAxis: 'y' },
+    });
+  }
+}
