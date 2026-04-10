@@ -371,3 +371,20 @@ function renderPagination(name, totalPages) {
 
   el.appendChild(createBtn('Next ›', s.page + 1, s.page === totalPages, false));
 }
+function exportCSV(name) {
+  const s = state[name];
+  if (!s.filtered.length) { showToast('No data to export.'); return; }
+
+  const escape = v => '"' + String(v ?? '').replace(/"/g, '""') + '"';
+  const lines = [s.cols.map(escape).join(',')];
+  s.filtered.forEach(row => lines.push(row.map(escape).join(',')));
+
+  const blob = new Blob([lines.join('\n')], { type: 'text/csv' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url;
+  a.download = `insight-atlas-${name}-${Date.now()}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast(`✓ ${capitalize(name)} exported as CSV`);
+}
