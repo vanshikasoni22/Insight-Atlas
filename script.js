@@ -388,3 +388,22 @@ function exportCSV(name) {
   URL.revokeObjectURL(url);
   showToast(`✓ ${capitalize(name)} exported as CSV`);
 }
+
+function handleGlobalSearch(val) {
+  ['orders', 'events', 'invoices', 'reviews', 'products'].forEach(name => {
+    if (!state[name].loaded) return;
+    const inp = document.getElementById(name + '-search');
+    if (inp) inp.value = val;
+    filterTable(name);
+  });
+}
+
+function drawSectionChart(name, cols, rows) {
+  const cfg = getChartColors();
+
+  if (name === 'orders')   drawOrdersChart(cols, rows, cfg);
+  if (name === 'events')   drawEventsChart(cols, rows, cfg);
+  if (name === 'invoices') drawInvoicesChart(cols, rows, cfg);
+  if (name === 'reviews')  drawReviewsChart(cols, rows, cfg, 'reviewsChart');
+  if (name === 'products') drawProductsChart(cols, rows, cfg, 'productsChart');
+}
