@@ -657,3 +657,19 @@ function drawProductsChart(cols, rows, cfg, canvasId) {
     });
   }
 }
+function drawSimpleBarChart(canvasId, cols, rows, cfg) {
+  destroyChart(canvasId);
+  const numColIdx = cols.findIndex((c, i) => rows.slice(0, 10).some(r => typeof r[i] === 'number' || !isNaN(parseFloat(r[i]))));
+  const labels = rows.slice(0, 20).map(r => String(r[0] ?? ''));
+  const data   = numColIdx > 0 ? rows.slice(0, 20).map(r => parseFloat(r[numColIdx]) || 0) : rows.slice(0, 20).map((_, i) => i + 1);
+
+  const ctx = document.getElementById(canvasId).getContext('2d');
+  charts[canvasId] = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{ label: cols[numColIdx] || 'Value', data, backgroundColor: cfg.accent + 'cc', borderRadius: 6 }]
+    },
+    options: barChartOptions(cfg),
+  });
+}
