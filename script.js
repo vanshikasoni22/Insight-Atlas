@@ -673,3 +673,30 @@ function drawSimpleBarChart(canvasId, cols, rows, cfg) {
     options: barChartOptions(cfg),
   });
 }
+function lineChartOptions(cfg) {
+  return {
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#13162a',
+        titleColor: '#e8eaf6',
+        bodyColor: '#9199c4',
+        padding: 10,
+        cornerRadius: 8,
+      }
+    },
+    scales: {
+      x: {
+        ticks: { color: cfg.text, font: { size: 10 }, maxTicksLimit: 8 },
+        grid: { color: cfg.grid },
+      },
+      y: {
+        ticks: { color: cfg.text, font: { size: 10 } },
+        grid: { color: cfg.grid },
+      }
+    }
+  };
+}
