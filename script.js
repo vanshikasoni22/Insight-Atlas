@@ -87,7 +87,7 @@ function showSection(name, navEl) {
   if (!res.ok) throw new Error(`HTTP ${res.status} – ${res.statusText}`);
   return res.json();
 }
-  function parseMetabaseData(raw) {
+function parseMetabaseData(raw) {
   if (Array.isArray(raw)) {
     // Flat array — derive cols from first object keys
     if (raw.length === 0) return { cols: [], rows: [] };
@@ -108,4 +108,43 @@ function showSection(name, navEl) {
   }
 
   return { cols: [], rows: [] };
+}
+const API_MAP = {
+  orders:   ORDERS_API,
+  events:   EVENTS_API,
+  invoices: INVOICES_API,
+  reviews:  REVIEWS_API,
+  products: PRODUCTS_API,
+};
+
+async function fetchSectionData(name) {
+  showLoading(name, true);
+  try {
+    const raw = await fetchJSON(API_MAP[name]);
+    const { cols, rows } = parseMetabaseData(raw);
+    state[name].cols     = cols;
+    state[name].raw      = rows;
+    state[name].filtered = [...rows];
+    state[name].loaded   = true;
+    state[name].page     = 1;
+    state[name].sortCol  = null;
+
+    // Update KPI
+    updateKPI(name, rows.length);
+
+    // Build filter column options
+    buildFilterOptions(name, cols);
+
+    // Render table
+    renderTable(name);
+
+    // Draw section chart
+    drawSectionChart(name, cols, rows);
+
+    showToast(`✓ ${capitalize(name)} data loaded – ${rows.length} records`);
+  } catch (err) {
+    showLoading(name, false);
+    showError(name, err.message);
+    showToast(`✗ Failed to load ${name}: ${err.message}`);
+  }
 }
