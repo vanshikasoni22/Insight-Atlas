@@ -721,3 +721,18 @@ function barChartOptions(cfg) {
     }
   };
 }
+function destroyChart(id) {
+  if (charts[id]) {
+    charts[id].destroy();
+    delete charts[id];
+  }
+}
+
+function rebuildAllCharts() {
+  const cfg = getChartColors();
+  Object.keys(state).forEach(name => {
+    if (state[name].loaded) {
+      drawSectionChart(name, state[name].cols, state[name].raw);
+    }
+  });
+}
