@@ -210,3 +210,11 @@ function filterTable(name) {
   s.page = 1;
   renderTable(name);
 }
+function guessDateColIndex(cols) {
+  const keywords = ['date', 'time', 'created', 'updated', 'at'];
+  for (let i = 0; i < cols.length; i++) {
+    const lower = cols[i].toLowerCase();
+    if (keywords.some(k => lower.includes(k))) return i;
+  }
+  return -1;
+}
