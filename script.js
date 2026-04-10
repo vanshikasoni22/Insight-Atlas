@@ -495,3 +495,42 @@ function drawEventsChart(cols, rows, cfg) {
     options: barChartOptions(cfg),
   });
 }
+
+function drawInvoicesChart(cols, rows, cfg) {
+  destroyChart('invoicesChart');
+  const amountIdx = cols.findIndex(c => c.toLowerCase().includes('amount') || c.toLowerCase().includes('total') || c.toLowerCase().includes('price'));
+
+  if (amountIdx === -1) { drawSimpleBarChart('invoicesChart', cols, rows, cfg); return; }
+
+  const dateIdx = cols.findIndex(c => c.toLowerCase().includes('date') || c.toLowerCase().includes('creat'));
+  if (dateIdx === -1) { drawSimpleBarChart('invoicesChart', cols, rows, cfg); return; }
+
+  const monthTotals = {};
+  rows.forEach(row => {
+    const d = new Date(row[dateIdx]);
+    if (isNaN(d)) return;
+    const key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+    const amt = parseFloat(row[amountIdx]) || 0;
+    monthTotals[key] = (monthTotals[key] || 0) + amt;
+  });
+
+  const sorted = Object.entries(monthTotals).sort((a, b) => a[0].localeCompare(b[0]));
+  const ctx = document.getElementById('invoicesChart').getContext('2d');
+  charts['invoicesChart'] = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: sorted.map(([k]) => k),
+      datasets: [{
+        label: 'Invoice Amount ($)',
+        data: sorted.map(([, v]) => v.toFixed(2)),
+        borderColor: cfg.success,
+        backgroundColor: cfg.success + '22',
+        fill: true,
+        tension: 0.4,
+        pointRadius: 3,
+        pointBackgroundColor: cfg.success,
+      }]
+    },
+    options: lineChartOptions(cfg),
+  });
+}
