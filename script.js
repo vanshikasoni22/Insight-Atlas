@@ -163,3 +163,50 @@ function updateKPI(name, count) {
   const el = document.getElementById('kpi-' + name);
   if (el) el.textContent = count.toLocaleString();
 }
+
+function buildFilterOptions(name, cols) {
+  const sel = document.getElementById(name + '-filter-col');
+  if (!sel) return;
+  sel.innerHTML = '<option value="">All Columns</option>';
+  cols.forEach(col => {
+    const opt = document.createElement('option');
+    opt.value = col;
+    opt.textContent = col;
+    sel.appendChild(opt);
+  });
+}
+
+function filterTable(name) {
+  const searchVal = (document.getElementById(name + '-search') || {}).value?.toLowerCase() || '';
+  const colFilter = (document.getElementById(name + '-filter-col') || {}).value || '';
+  const timeFilter = parseInt((document.getElementById(name + '-filter-time') || {}).value) || 0;
+  const s = state[name];
+
+  s.filtered = s.raw.filter(row => {
+    // Time filter: look for a date-like column
+    if (timeFilter > 0) {
+      const dateColIdx = guessDateColIndex(s.cols);
+      if (dateColIdx !== -1 && row[dateColIdx]) {
+        const d = new Date(row[dateColIdx]);
+        if (!isNaN(d)) {
+          const cutoff = new Date();
+          cutoff.setDate(cutoff.getDate() - timeFilter);
+          if (d < cutoff) return false;
+        }
+      }
+    }
+
+    // Search filter
+    if (!searchVal) return true;
+
+    if (colFilter) {
+      const idx = s.cols.indexOf(colFilter);
+      if (idx === -1) return true;
+      return String(row[idx] ?? '').toLowerCase().includes(searchVal);
+    }
+    return row.some(cell => String(cell ?? '').toLowerCase().includes(searchVal));
+  });
+
+  s.page = 1;
+  renderTable(name);
+}
