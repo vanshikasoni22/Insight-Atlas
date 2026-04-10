@@ -263,3 +263,33 @@ body {
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
 }
+.orders-icon   { background: rgba(124,106,247,0.15); color: #7c6af7; }
+.events-icon   { background: rgba(56,189,248,0.15);  color: #38bdf8; }
+.invoices-icon { background: rgba(52,211,153,0.15);  color: #34d399; }
+.reviews-icon  { background: rgba(251,191,36,0.15);  color: #fbbf24; }
+.products-icon { background: rgba(244,114,182,0.15); color: #f472b6; }
+
+.kpi-info { flex: 1; z-index: 1; }
+
+.kpi-value {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.kpi-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.kpi-trend {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-muted);
+  z-index: 1;
+}
+
+.kpi-trend.up { color: var(--success); }
