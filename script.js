@@ -230,16 +230,15 @@ function sortTable(name, colIdx) {
 
   s.filtered.sort((a, b) => {
     const va = a[colIdx], vb = b[colIdx];
-    // Numeric sort
     if (!isNaN(parseFloat(va)) && !isNaN(parseFloat(vb))) {
       return s.sortDir === 'asc' ? parseFloat(va) - parseFloat(vb) : parseFloat(vb) - parseFloat(va);
     }
-    // Date sort
+
     const da = new Date(va), db = new Date(vb);
     if (!isNaN(da) && !isNaN(db)) {
       return s.sortDir === 'asc' ? da - db : db - da;
     }
-    // String sort
+
     const sa = String(va ?? '').toLowerCase();
     const sb = String(vb ?? '').toLowerCase();
     if (sa < sb) return s.sortDir === 'asc' ? -1 : 1;
@@ -250,3 +249,58 @@ function sortTable(name, colIdx) {
   s.page = 1;
   renderTable(name);
 }
+
+function renderTable(name) {
+  const s = state[name];
+  const table = document.getElementById(name + '-table');
+  const thead = document.getElementById(name + '-thead');
+  const tbody = document.getElementById(name + '-tbody');
+  const loading = document.getElementById(name + '-loading');
+  const countEl = document.getElementById(name + '-count');
+
+  if (!table) return;
+  loading.style.display = 'none';
+  table.style.display = 'table';
+
+  // Update row count
+  if (countEl) countEl.textContent = s.filtered.length.toLocaleString() + ' rows';
+
+  // Render header
+  thead.innerHTML = '';
+  const tr = document.createElement('tr');
+  s.cols.forEach((col, idx) => {
+    const th = document.createElement('th');
+    th.textContent = col;
+    th.title = 'Sort by ' + col;
+    if (s.sortCol === idx) th.classList.add('sorted-' + s.sortDir);
+    th.addEventListener('click', () => sortTable(name, idx));
+    tr.appendChild(th);
+  });
+  thead.appendChild(tr);
+
+  // Paginate
+  const start  = (s.page - 1) * PAGE_SIZE;
+  const end    = start + PAGE_SIZE;
+  const pageData = s.filtered.slice(start, end);
+
+  // Render body
+  tbody.innerHTML = '';
+  if (pageData.length === 0) {
+    const empty = document.createElement('tr');
+    const td = document.createElement('td');
+    td.colSpan = s.cols.length || 1;
+    td.innerHTML = '<div class="empty-state">No records match your filters.</div>';
+    empty.appendChild(td);
+    tbody.appendChild(empty);
+  } else {
+    pageData.forEach(row => {
+      const tr = document.createElement('tr');
+      row.forEach((cell, i) => {
+        const td = document.createElement('td');
+        td.title = String(cell ?? '');
+        td.textContent = formatCell(cell, s.cols[i]);
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+  }
