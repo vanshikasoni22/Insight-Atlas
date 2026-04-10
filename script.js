@@ -464,3 +464,34 @@ function drawOrdersChart(cols, rows, cfg) {
     },
     options: lineChartOptions(cfg),
   });
+
+function drawEventsChart(cols, rows, cfg) {
+  destroyChart('eventsChart');
+  const dateIdx = cols.findIndex(c => c.toLowerCase().includes('date') || c.toLowerCase().includes('time') || c.toLowerCase().includes('at'));
+
+  if (dateIdx === -1) { drawSimpleBarChart('eventsChart', cols, rows, cfg); return; }
+
+  const monthCounts = {};
+  rows.forEach(row => {
+    const d = new Date(row[dateIdx]);
+    if (isNaN(d)) return;
+    const key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+    monthCounts[key] = (monthCounts[key] || 0) + 1;
+  });
+
+  const sorted = Object.entries(monthCounts).sort((a, b) => a[0].localeCompare(b[0]));
+  const ctx = document.getElementById('eventsChart').getContext('2d');
+  charts['eventsChart'] = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: sorted.map(([k]) => k),
+      datasets: [{
+        label: 'Events',
+        data: sorted.map(([, v]) => v),
+        backgroundColor: cfg.accent2 + 'cc',
+        borderRadius: 6,
+      }]
+    },
+    options: barChartOptions(cfg),
+  });
+}
