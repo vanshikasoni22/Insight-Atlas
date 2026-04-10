@@ -534,3 +534,50 @@ function drawInvoicesChart(cols, rows, cfg) {
     options: lineChartOptions(cfg),
   });
 }
+
+function drawReviewsChart(cols, rows, cfg, canvasId) {
+  destroyChart(canvasId);
+  const ratingIdx = cols.findIndex(c => c.toLowerCase().includes('rating') || c.toLowerCase().includes('score') || c.toLowerCase().includes('star'));
+
+  let distribution = {};
+  if (ratingIdx !== -1) {
+    rows.forEach(row => {
+      const r = Math.round(parseFloat(row[ratingIdx]));
+      if (!isNaN(r)) distribution[r] = (distribution[r] || 0) + 1;
+    });
+  } else {
+    // fallback: count by first column unique values (top 6)
+    const counts = {};
+    rows.forEach(row => { const v = String(row[0]); counts[v] = (counts[v] || 0) + 1; });
+    const top = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 6);
+    top.forEach(([k, v]) => distribution[k] = v);
+  }
+
+  const labels = Object.keys(distribution).sort();
+  const data   = labels.map(k => distribution[k]);
+  const colors = [cfg.accent, cfg.accent2, cfg.accent3, cfg.success, cfg.warning, '#a78bfa'];
+
+  const ctx = document.getElementById(canvasId).getContext('2d');
+  charts[canvasId] = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels,
+      datasets: [{
+        data,
+        backgroundColor: colors,
+        borderWidth: 0,
+        hoverOffset: 6,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: { color: cfg.text, font: { size: 11 }, boxWidth: 12, padding: 10 }
+        },
+        tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.raw}` } }
+      }
+    }
+  });
