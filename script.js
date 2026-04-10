@@ -1,49 +1,5 @@
-
-const API_URL = "http://localhost:3000/public/question/62f29651-4ca0-4cdb-a779-0095b1f1d264.json?format=rows";
-
-async function fetchData() {
-  try {
-    const res = await fetch(API_URL);
-    let data = await res.json();
-
-
-    data = data.filter(item =>
-      item["User ID"].toLowerCase().includes("john")
-    );
-
-    data = data.filter(item =>
-      item["Total ($)"] > 100
-    );
-    data = data.filter(item =>
-      item["Quantity"] > 2
-    );
-    // data = data.sort((a, b) => b["Total ($)"] - a["Total ($)"]);
-
-    displayData(data);
-
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
-}
-
-function displayData(data) {
-  const container = document.getElementById("data");
-  container.innerHTML = ""; // clear old data
-
-  data.slice(0, 50).forEach(item => {
-    const div = document.createElement("div");
-
-    div.innerHTML = `
-      <p>
-        User: ${item["User ID"]} |
-        Product: ${item["Product ID"]} |
-        Total: ${item["Total ($)"]} |
-        Quantity: ${item["Quantity"]}
-      </p>
-    `;
-
-    container.appendChild(div);
-  });
-}
-
-fetchData();
+const ORDERS_API   = "http://localhost:3000/public/question/a35cde03-47c3-4c24-80e2-546275e66322.json";
+const EVENTS_API   = "http://localhost:3000/public/question/64511719-7718-4e51-8c89-721ed1097574.json";
+const INVOICES_API = "http://localhost:3000/public/question/27ecdfa8-a096-4a59-93d1-bc0b47f066f8.json";
+const REVIEWS_API  = "http://localhost:3000/public/question/43af4062-a891-4762-8916-621a9f4f21bc.json";
+const PRODUCTS_API = "http://localhost:3000/public/question/ab0d100e-01ba-4ff1-80cc-4a90fd7e8458.json";
