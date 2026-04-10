@@ -325,3 +325,49 @@ function formatCell(value, colName) {
   }
   return String(value);
 }
+
+function renderPagination(name, totalPages) {
+  const el = document.getElementById(name + '-pagination');
+  if (!el) return;
+  el.innerHTML = '';
+  if (totalPages <= 1) return;
+
+  const s = state[name];
+
+  const createBtn = (label, page, disabled, active) => {
+    const btn = document.createElement('button');
+    btn.textContent = label;
+    if (disabled) btn.disabled = true;
+    if (active)   btn.classList.add('active');
+    btn.addEventListener('click', () => {
+      if (!disabled) { s.page = page; renderTable(name); }
+    });
+    return btn;
+  };
+
+  el.appendChild(createBtn('‹ Prev', s.page - 1, s.page === 1, false));
+  let pages = [];
+  if (totalPages <= 7) {
+    pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+  } else {
+    pages = [1, 2];
+    if (s.page > 4) pages.push('…');
+    for (let p = Math.max(3, s.page - 1); p <= Math.min(totalPages - 2, s.page + 1); p++) pages.push(p);
+    if (s.page < totalPages - 3) pages.push('…');
+    pages.push(totalPages - 1, totalPages);
+  }
+
+  pages.forEach(p => {
+    if (p === '…') {
+      const span = document.createElement('span');
+      span.textContent = '…';
+      span.style.color = 'var(--text-muted)';
+      span.style.padding = '0 4px';
+      el.appendChild(span);
+    } else {
+      el.appendChild(createBtn(p, p, false, p === s.page));
+    }
+  });
+
+  el.appendChild(createBtn('Next ›', s.page + 1, s.page === totalPages, false));
+}
