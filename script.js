@@ -581,3 +581,23 @@ function drawReviewsChart(cols, rows, cfg, canvasId) {
       }
     }
   });
+
+  if (canvasId === 'reviewsChart') {
+    destroyChart('overviewReviewsChart');
+    const ctx3 = document.getElementById('overviewReviewsChart').getContext('2d');
+    charts['overviewReviewsChart'] = new Chart(ctx3, {
+      type: 'doughnut',
+      data: {
+        labels,
+        datasets: [{ data, backgroundColor: colors, borderWidth: 0, hoverOffset: 4 }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom', labels: { color: cfg.text, font: { size: 10 }, boxWidth: 10, padding: 8 } }
+        }
+      }
+    });
+  }
+}
