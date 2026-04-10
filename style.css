@@ -187,3 +187,18 @@ body {
 }
 
 .search-wrapper input::placeholder { color: var(--text-muted); }
+.topbar-time {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 500;
+  white-space: nowrap;
+}
+.dashboard-section {
+  display: none;
+  padding: 28px 28px 40px;
+  flex-direction: column;
+  gap: 24px;
+  animation: fadeIn 0.35s ease;
+}
+
+.dashboard-section.active { display: flex; }
