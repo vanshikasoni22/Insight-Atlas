@@ -1,82 +1,9 @@
 body {
-  font-family: Arial, sans-serif;
-  background-color: #87c1fa;
-  margin: 0;
-  padding: 20px;
-}
-
-h1 {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  text-align: center;
-  color: #333;
-}
-
-/* Container for data */
-#data {
-  max-width: 800px;
-  margin: auto;
-}
-
-/* Each row */
-#data div {
-  background: white;
-  padding: 12px 16px;
-  margin-bottom: 10px;
-  border-radius: 8px;
-  border-left: 5px solid #3b82f6;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-}
-
-/* Text inside rows */
-#data p {
-  margin: 0;
-  color: #444;
-  font-size: 14px;
-}
-
-/* Hover effect */
-#data div:hover {
-  background-color: #f1f5f9;
-  transition: 0.2s;
-}
-/* Responsive Design */
-@media (max-width: 768px) {
-
-  body {
-    padding: 10px;
-  }
-
-  h1 {
-    font-size: 20px;
-  }
-
-  #data {
-    max-width: 100%;
-  }
-
-  #data div {
-    padding: 10px;
-    font-size: 13px;
-  }
-
-  #data p {
-    font-size: 13px;
-    line-height: 1.4;
-  }
-}
-
-/* Extra small devices (phones) */
-@media (max-width: 480px) {
-
-  h1 {
-    font-size: 18px;
-  }
-
-  #data div {
-    padding: 8px;
-  }
-
-  #data p {
-    font-size: 12px;
-  }
+  font-family: 'Inter', 'Space Grotesk', system-ui, sans-serif;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  display: flex;
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background 0.3s, color 0.3s;
 }
