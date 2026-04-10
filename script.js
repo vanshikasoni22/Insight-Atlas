@@ -218,3 +218,35 @@ function guessDateColIndex(cols) {
   }
   return -1;
 }
+
+function sortTable(name, colIdx) {
+  const s = state[name];
+  if (s.sortCol === colIdx) {
+    s.sortDir = s.sortDir === 'asc' ? 'desc' : 'asc';
+  } else {
+    s.sortCol = colIdx;
+    s.sortDir = 'asc';
+  }
+
+  s.filtered.sort((a, b) => {
+    const va = a[colIdx], vb = b[colIdx];
+    // Numeric sort
+    if (!isNaN(parseFloat(va)) && !isNaN(parseFloat(vb))) {
+      return s.sortDir === 'asc' ? parseFloat(va) - parseFloat(vb) : parseFloat(vb) - parseFloat(va);
+    }
+    // Date sort
+    const da = new Date(va), db = new Date(vb);
+    if (!isNaN(da) && !isNaN(db)) {
+      return s.sortDir === 'asc' ? da - db : db - da;
+    }
+    // String sort
+    const sa = String(va ?? '').toLowerCase();
+    const sb = String(vb ?? '').toLowerCase();
+    if (sa < sb) return s.sortDir === 'asc' ? -1 : 1;
+    if (sa > sb) return s.sortDir === 'asc' ? 1 : -1;
+    return 0;
+  });
+
+  s.page = 1;
+  renderTable(name);
+}
