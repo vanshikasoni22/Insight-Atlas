@@ -62,3 +62,17 @@
       </button>
     </div>
   </aside>
+    <main class="main-content" id="mainContent">
+    <header class="topbar">
+      <button class="hamburger" id="hamburger" onclick="toggleSidebar()">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="topbar-title" id="topbarTitle">Overview</div>
+      <div class="topbar-right">
+        <div class="search-wrapper">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="globalSearch" placeholder="Search anything..." oninput="handleGlobalSearch(this.value)" />
+        </div>
+        <div class="topbar-time" id="topbarTime"></div>
+      </div>
+    </header>
