@@ -158,3 +158,8 @@ function showError(name, msg) {
   if (!wrapper) return;
   wrapper.innerHTML = `<div class="empty-state">⚠️ ${msg}</div>`;
 }
+
+function updateKPI(name, count) {
+  const el = document.getElementById('kpi-' + name);
+  if (el) el.textContent = count.toLocaleString();
+}
