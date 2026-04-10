@@ -148,3 +148,13 @@ async function fetchSectionData(name) {
     showToast(`✗ Failed to load ${name}: ${err.message}`);
   }
 }
+function showLoading(name, show) {
+  const el = document.getElementById(name + '-loading');
+  if (el) el.style.display = show ? 'flex' : 'none';
+}
+
+function showError(name, msg) {
+  const wrapper = document.getElementById(name + '-table-wrapper');
+  if (!wrapper) return;
+  wrapper.innerHTML = `<div class="empty-state">⚠️ ${msg}</div>`;
+}
