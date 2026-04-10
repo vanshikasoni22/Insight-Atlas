@@ -7,3 +7,14 @@ body {
   overflow-x: hidden;
   transition: background 0.3s, color 0.3s;
 }
+.sidebar {
+  position: fixed;
+  left: 0; top: 0; bottom: 0;
+  width: var(--sidebar-width);
+  background: var(--bg-surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), background 0.3s;
+}
