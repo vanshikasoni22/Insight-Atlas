@@ -157,3 +157,50 @@
         </div>
       </div>
     </section>
+
+    <section id="section-orders" class="dashboard-section">
+      <div class="section-header">
+        <h1>Orders</h1>
+        <p class="section-subtitle">Browse, filter and analyze all customer orders</p>
+      </div>
+      <div class="chart-card full-width">
+        <div class="chart-card-header">
+          <div class="chart-card-title">Orders Trend</div>
+        </div>
+        <div class="chart-wrapper"><canvas id="ordersChart"></canvas></div>
+      </div>
+      <div class="data-card" id="orders-data-card">
+        <div class="data-card-toolbar">
+          <div class="toolbar-left">
+            <input type="text" class="filter-input" id="orders-search" placeholder="Search orders..." oninput="filterTable('orders')" />
+          </div>
+          <div class="toolbar-right">
+            <select class="filter-select" id="orders-filter-col" onchange="filterTable('orders')">
+              <option value="">All Columns</option>
+            </select>
+            <select class="filter-select" id="orders-filter-time">
+              <option value="">All Time</option>
+              <option value="7">Last 7 days</option>
+              <option value="30">Last 30 days</option>
+              <option value="90">Last 90 days</option>
+              <option value="365">Last year</option>
+            </select>
+            <button class="btn-icon" onclick="exportCSV('orders')" title="Export CSV">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            </button>
+            <span class="row-count" id="orders-count">0 rows</span>
+          </div>
+        </div>
+        <div class="table-wrapper" id="orders-table-wrapper">
+          <div class="loading-state" id="orders-loading">
+            <div class="spinner"></div>
+            <span>Fetching orders data…</span>
+          </div>
+          <table class="data-table" id="orders-table" style="display:none">
+            <thead id="orders-thead"></thead>
+            <tbody id="orders-tbody"></tbody>
+          </table>
+        </div>
+        <div class="pagination" id="orders-pagination"></div>
+      </div>
+    </section>
