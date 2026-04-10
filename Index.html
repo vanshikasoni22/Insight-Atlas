@@ -204,3 +204,50 @@
         <div class="pagination" id="orders-pagination"></div>
       </div>
     </section>
+
+    <section id="section-events" class="dashboard-section">
+      <div class="section-header">
+        <h1>Events</h1>
+        <p class="section-subtitle">Track and explore all recorded events</p>
+      </div>
+      <div class="chart-card full-width">
+        <div class="chart-card-header">
+          <div class="chart-card-title">Events Over Time</div>
+        </div>
+        <div class="chart-wrapper"><canvas id="eventsChart"></canvas></div>
+      </div>
+      <div class="data-card" id="events-data-card">
+        <div class="data-card-toolbar">
+          <div class="toolbar-left">
+            <input type="text" class="filter-input" id="events-search" placeholder="Search events..." oninput="filterTable('events')" />
+          </div>
+          <div class="toolbar-right">
+            <select class="filter-select" id="events-filter-col" onchange="filterTable('events')">
+              <option value="">All Columns</option>
+            </select>
+            <select class="filter-select" id="events-filter-time">
+              <option value="">All Time</option>
+              <option value="7">Last 7 days</option>
+              <option value="30">Last 30 days</option>
+              <option value="90">Last 90 days</option>
+              <option value="365">Last year</option>
+            </select>
+            <button class="btn-icon" onclick="exportCSV('events')" title="Export CSV">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            </button>
+            <span class="row-count" id="events-count">0 rows</span>
+          </div>
+        </div>
+        <div class="table-wrapper" id="events-table-wrapper">
+          <div class="loading-state" id="events-loading">
+            <div class="spinner"></div>
+            <span>Fetching events data…</span>
+          </div>
+          <table class="data-table" id="events-table" style="display:none">
+            <thead id="events-thead"></thead>
+            <tbody id="events-tbody"></tbody>
+          </table>
+        </div>
+        <div class="pagination" id="events-pagination"></div>
+      </div>
+    </section>
