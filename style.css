@@ -103,3 +103,12 @@ body {
   color: var(--accent);
   border-color: var(--accent);
 }
+
+.main-content {
+  margin-left: var(--sidebar-width);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  transition: margin-left 0.3s cubic-bezier(0.4,0,0.2,1);
+}
