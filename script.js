@@ -81,3 +81,31 @@ function showSection(name, navEl) {
     clearTimeout(_toastTimer);
     _toastTimer = setTimeout(() => t.classList.remove('show'), 3200);
   }
+
+  async function fetchJSON(url) {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`HTTP ${res.status} – ${res.statusText}`);
+  return res.json();
+}
+  function parseMetabaseData(raw) {
+  if (Array.isArray(raw)) {
+    // Flat array — derive cols from first object keys
+    if (raw.length === 0) return { cols: [], rows: [] };
+    const cols = Object.keys(raw[0]);
+    const rows = raw.map(item => cols.map(c => item[c]));
+    return { cols, rows };
+  }
+
+  if (raw && raw.data && Array.isArray(raw.data.rows)) {
+    const cols = raw.data.cols.map(c => c.display_name || c.name);
+    return { cols, rows: raw.data.rows };
+  }
+
+  // Try results wrapper
+  if (raw && Array.isArray(raw.rows)) {
+    const cols = raw.cols ? raw.cols.map(c => c.display_name || c.name) : Object.keys(raw.rows[0] || {});
+    return { cols, rows: raw.rows };
+  }
+
+  return { cols: [], rows: [] };
+}
