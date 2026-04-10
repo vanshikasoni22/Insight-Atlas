@@ -251,3 +251,50 @@
         <div class="pagination" id="events-pagination"></div>
       </div>
     </section>
+
+    <section id="section-invoices" class="dashboard-section">
+      <div class="section-header">
+        <h1>Invoices</h1>
+        <p class="section-subtitle">Manage and review all billing records</p>
+      </div>
+      <div class="chart-card full-width">
+        <div class="chart-card-header">
+          <div class="chart-card-title">Invoice Amount Trend</div>
+        </div>
+        <div class="chart-wrapper"><canvas id="invoicesChart"></canvas></div>
+      </div>
+      <div class="data-card" id="invoices-data-card">
+        <div class="data-card-toolbar">
+          <div class="toolbar-left">
+            <input type="text" class="filter-input" id="invoices-search" placeholder="Search invoices..." oninput="filterTable('invoices')" />
+          </div>
+          <div class="toolbar-right">
+            <select class="filter-select" id="invoices-filter-col" onchange="filterTable('invoices')">
+              <option value="">All Columns</option>
+            </select>
+            <select class="filter-select" id="invoices-filter-time">
+              <option value="">All Time</option>
+              <option value="7">Last 7 days</option>
+              <option value="30">Last 30 days</option>
+              <option value="90">Last 90 days</option>
+              <option value="365">Last year</option>
+            </select>
+            <button class="btn-icon" onclick="exportCSV('invoices')" title="Export CSV">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            </button>
+            <span class="row-count" id="invoices-count">0 rows</span>
+          </div>
+        </div>
+        <div class="table-wrapper" id="invoices-table-wrapper">
+          <div class="loading-state" id="invoices-loading">
+            <div class="spinner"></div>
+            <span>Fetching invoices data…</span>
+          </div>
+          <table class="data-table" id="invoices-table" style="display:none">
+            <thead id="invoices-thead"></thead>
+            <tbody id="invoices-tbody"></tbody>
+          </table>
+        </div>
+        <div class="pagination" id="invoices-pagination"></div>
+      </div>
+    </section>
